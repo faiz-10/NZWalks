@@ -5,6 +5,7 @@ using NZWalks.API.CustomActionFilters;
 using NZWalks.API.Models.Domain;
 using NZWalks.API.Models.DTO;
 using NZWalks.API.Repositories;
+using System.Net;
 
 namespace NZWalks.API.Controllers
 {
@@ -43,9 +44,12 @@ namespace NZWalks.API.Controllers
         {
             var walksDomainModel = await walkRepository.GetAllAsync(filterOn, filterQuery, sortBy, isAscending ?? true, pageNumber, pageSize);
 
+            // Create an exception // this will be catched automatically by the created exception middleware
+            throw new Exception("Sample exception for demonstration purposes.");
+
             // Map the Domain models to DTOs
             var walksDto = mapper.Map<List<WalkDto>>(walksDomainModel);
-            
+
             return Ok(walksDto);
         }
 
